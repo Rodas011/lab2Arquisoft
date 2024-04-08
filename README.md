@@ -1,3 +1,11 @@
+[![CI/CD Pipeline](https://github.com/Rodas011/lab2Arquisoft/actions/workflows/build.yml/badge.svg)](https://github.com/Rodas011/lab2Arquisoft/actions/workflows/build.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Rodas011_lab2Arquisoft&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Rodas011_lab2Arquisoft)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=Rodas011_lab2Arquisoft&metric=bugs)](https://sonarcloud.io/summary/new_code?id=Rodas011_lab2Arquisoft)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Rodas011_lab2Arquisoft&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Rodas011_lab2Arquisoft)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=Rodas011_lab2Arquisoft&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=Rodas011_lab2Arquisoft)[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=Rodas011_lab2Arquisoft&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=Rodas011_lab2Arquisoft)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=Rodas011_lab2Arquisoft&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=Rodas011_lab2Arquisoft)
+
+# lab2Arquisoft
 Implementation of a Simple App with the next operations:
 
 * Get random nations
