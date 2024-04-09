@@ -131,5 +131,5 @@ jobs:
         run: |
           pwd
           ls
-          docker build -f ${{ github.workspace }}/Dockerfile . -t lab2arquisoft.azurecr.io/myapp:${{ github.sha }}
+          docker build -f Dockerfile . -t lab2arquisoft.azurecr.io/myapp:${{ github.sha }}
           docker push lab2arquisoft.azurecr.io/myapp:${{ github.sha }}
