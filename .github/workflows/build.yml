@@ -118,7 +118,12 @@ jobs:
     steps:
       #Check-out your repository under $GITHUB_WORKSPACE, so your workflow can access it
       - uses: actions/checkout@v1
-
+      #Download artifact from build job
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v2
+        with:
+          name: artifact
+          path: target/laboratorio2-0.0.1-SNAPSHOT.jar
       #Login to Azure
       - name: Login to Azure
         uses: azure/docker-login@v1
@@ -126,7 +131,6 @@ jobs:
             login-server: lab2arquisoft.azurecr.io
             username: ${{ secrets.REGISTRY_USERNAME }}
             password: ${{ secrets.REGISTRY_PASSWORD }}
-
       #Build and push Docker image
       - name: Build and push Docker image
         run: |
@@ -134,5 +138,5 @@ jobs:
           cd ${{ github.workspace }}
           pwd
           ls
-          docker build -f Dockerfile . -t lab2arquisoft.azurecr.io/myapp:${{ github.sha }}
-          docker push lab2arquisoft.azurecr.io/myapp:${{ github.sha }}
+          docker build -f Dockerfile . -t lab2arquisoft.azurecr.io/lab2Arquisoft:${{ github.sha }}
+          docker push lab2arquisoft.azurecr.io/lab2Arquisoft:${{ github.sha }}
