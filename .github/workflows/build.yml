@@ -127,5 +127,5 @@ jobs:
       #Build and push Docker image
       - name: Build and push Docker image
         run: |
-          docker build . -t lab2arquisoft.azurecr.io/myapp:${{ github.sha }}
+          docker build ${{ github.workspace }} -t lab2arquisoft.azurecr.io/myapp:${{ github.sha }}
           docker push lab2arquisoft.azurecr.io/myapp:${{ github.sha }}
