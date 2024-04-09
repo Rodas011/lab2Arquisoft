@@ -34,7 +34,7 @@ jobs:
       - name: Run Tests
         run: mvn -B test
 
-#Sonar's Job
+  #Sonar's Job
   sonar:
     #Depends on test's job
     needs: tests
@@ -45,7 +45,7 @@ jobs:
     steps:
       #Check-out your repository under $GITHUB_WORKSPACE, so your workflow can access it
       - uses: actions/checkout@v1
-      #Set up JDK 11
+      #Set up JDK 17
       - name: Set up JDK
         uses: actions/setup-java@v1
         with:
@@ -73,7 +73,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-#Build's job
+  #Build's job
   build:
     #Depends on sonar's job
     needs: sonar
@@ -108,3 +108,24 @@ jobs:
           name: artifact
           #From this path
           path: target/laboratorio2-0.0.1-SNAPSHOT.jar
+
+  #Build and Publish Docker Image to AzureDevOps job
+  build-and-publish:
+    #Depends on build's job
+    needs: build
+    name: Publish
+    #Run on Ubuntu using the latest version
+    runs-on: ubuntu-latest
+    steps:
+      #Login to Azure
+      - name: Login to Azure
+        uses: azure/docker-login@v1
+        with:
+            login-server: lab2arquisoft.azurecr.io
+            username: ${{ secrets.REGISTRY_USERNAME }}
+            password: ${{ secrets.REGISTRY_PASSWORD }}
+      #Build and push Docker image
+      - name: Build and push Docker image
+        run: |
+          docker build . -t lab2arquisoft.azurecr.io/myapp:${{ github.sha }}
+          docker push lab2arquisoft.azurecr.io/myapp:${{ github.sha }}
