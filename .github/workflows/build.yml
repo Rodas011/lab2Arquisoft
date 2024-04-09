@@ -81,7 +81,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       #Check-out your repository under $GITHUB_WORKSPACE, so your workflow can access it
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
+        with:
+          path: .
       #Set up JDK 17
       - name: Set up JDK
         uses: actions/setup-java@v1
@@ -127,8 +129,5 @@ jobs:
       #Build and push Docker image
       - name: Build and push Docker image
         run: |
-          pwd
-          cd ${{ github.workspace }}/lab2Arquisoft
-          pwd
           docker build . -t lab2arquisoft.azurecr.io/myapp:${{ github.sha }}
           docker push lab2arquisoft.azurecr.io/myapp:${{ github.sha }}
