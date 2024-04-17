@@ -108,7 +108,7 @@ jobs:
           #From this path
           path: target/laboratorio2-0.0.1-SNAPSHOT.jar
 
-  #Publish Docker Image
+  #Build and Publish Docker Image
   publish:
     #Depends on build's job
     needs: build
