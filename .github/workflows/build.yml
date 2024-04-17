@@ -144,4 +144,4 @@ jobs:
       - name: delete old container
         run: docker rm -f lab2arquisoft-container
       - name: run container
-        run: docker run -d -p 8080:8080 --name lab2arquisoft-container rodas011/lab2arquisoft
+        run: docker run -d -p 8080:8080 --name lab2arquisoft-container rodas011/lab2arquisoft${{github.sha}}
