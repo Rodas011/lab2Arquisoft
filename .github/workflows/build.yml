@@ -107,7 +107,7 @@ jobs:
           #Set artifact name
           name: artifact
           #From this path
-          path: target/laboratorio2-0.0.1-SNAPSHOT.jar
+          path: target/lab2arquisoft.jar
 
   #Build and Publish Docker Image
   publish:
