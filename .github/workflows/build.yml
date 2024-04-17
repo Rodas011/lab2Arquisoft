@@ -108,43 +108,40 @@ jobs:
           #From this path
           path: target/laboratorio2-0.0.1-SNAPSHOT.jar
 
-  #Build and Publish Docker Image to Azure job
+  #Build and Publish Docker Image
   build-and-publish:
     #Depends on build's job
     needs: build
-    name: Publish
+    name: publish
     #Run on Ubuntu using the latest version
     runs-on: ubuntu-latest
     steps:
       #Check-out your repository under $GITHUB_WORKSPACE, so your workflow can access it
       - uses: actions/checkout@v1
+      #Login to Docker
+      - name: Login to Docker
+        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
       #Download artifact from build job
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
           name: artifact
           path: target/laboratorio2-0.0.1-SNAPSHOT.jar
-      #Login to Azure
-      - name: Login to Azure
-        uses: azure/docker-login@v1
-        with:
-            login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-            username: ${{ secrets.REGISTRY_USERNAME }}
-            password: ${{ secrets.REGISTRY_PASSWORD }}
       #Build and push Docker image
       - name: Build and push Docker image
         run: |
-          docker build -f Dockerfile . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/lab2arquisoft:${{ github.sha }}
-          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/lab2arquisoft:${{ github.sha }}
-      #Deploy to Azure Container Instances
-      - name: Deploy
-        uses: azure/aci-deploy@v1
-        with:
-          resource-group: ${{ secrets.RESOURCE_GROUP }}
-          dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ github.run_number }}
-          image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/lab2arquisoft:${{ github.sha }}
-          registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-          registry-username: ${{ secrets.REGISTRY_USERNAME }}
-          registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-          name: aci-lab2arquisoft
-          location: East US
+          docker build -f Dockerfile . -t laboratorio2/lab2arquisoft:${{github.sha}}
+          docker push laboratorio2/lab2arquisoft:${{github.sha}}
+
+  #Deploy to AWS EC2
+  deploy:
+    needs: publish
+    name: deploy
+    runs-on: aws-ec2
+    steps:
+      - name: pull image from dockerhub
+        run: docker pull laboratorio2/lab2arquisoft:${{github.sha}}
+      - name: delete old container
+        run: docker rm -f lab2arquisoft-container
+      - name: run container
+        run: docker run -d -p 8080:8080 --name lab2arquisoft-container laboratorio2/lab2arquisoft
