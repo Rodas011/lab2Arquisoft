@@ -130,8 +130,8 @@ jobs:
       #Build and push Docker image
       - name: Build and push Docker image
         run: |
-          docker build -f Dockerfile . -t laboratorio2/lab2arquisoft:${{github.sha}}
-          docker push laboratorio2/lab2arquisoft:${{github.sha}}
+          docker build -f Dockerfile . -t rodas011/lab2arquisoft:${{github.sha}}
+          docker push rodas011/lab2arquisoft:${{github.sha}}
 
   #Deploy to AWS EC2
   deploy:
@@ -140,8 +140,8 @@ jobs:
     runs-on: aws-ec2
     steps:
       - name: pull image from dockerhub
-        run: docker pull laboratorio2/lab2arquisoft:${{github.sha}}
+        run: docker pull rodas011/lab2arquisoft:${{github.sha}}
       - name: delete old container
         run: docker rm -f lab2arquisoft-container
       - name: run container
-        run: docker run -d -p 8080:8080 --name lab2arquisoft-container laboratorio2/lab2arquisoft
+        run: docker run -d -p 8080:8080 --name lab2arquisoft-container rodas011/lab2arquisoft
