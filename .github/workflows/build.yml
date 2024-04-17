@@ -76,7 +76,6 @@ jobs:
   #Build's job
   build:
     #Depends on sonar's job
-    needs: sonar
     name: Build
     #Run on Ubuntu using the latest version
     runs-on: ubuntu-latest
@@ -111,22 +110,20 @@ jobs:
 
   #Build and Publish Docker Image
   publish:
+    needs: build
     name: Publish
-    runs-on: [ ubuntu-latest ]
+    runs-on: ubuntu-latest
     steps:
+      #Check-out your repository under $GITHUB_WORKSPACE, so your workflow can access it
       - name: Checkout source
         uses: actions/checkout@v3
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-      #Download the JAR file
+      #Download the JAR file from build job
       - name: Download JAR
         uses: actions/download-artifact@v2
         with:
           name: artifact
           path: target
+      #Login to Docker Hub
       - name: Login to docker hub
         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
       #Build and push Docker image
