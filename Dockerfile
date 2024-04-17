@@ -1,5 +1,5 @@
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
-COPY target/laboratorio2-0.0.1-SNAPSHOT.jar app.jar
+COPY target/lab2arquisoft.jar lab2arquisoft.jar
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","/app.jar"]
+ENTRYPOINT ["java","-jar","/lab2arquisoft.jar"]
