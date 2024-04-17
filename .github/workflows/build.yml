@@ -106,7 +106,7 @@ jobs:
           #Set artifact name
           name: artifact
           #From this path
-          path: target/laboratorio2-0.0.1-SNAPSHOT.jar
+          path: target/lab2arquisoft.jar
 
   #Build and Publish Docker Image
   publish:
@@ -118,6 +118,12 @@ jobs:
     steps:
       #Check-out your repository under $GITHUB_WORKSPACE, so your workflow can access it
       - uses: actions/checkout@v1
+      #Set up JDK 17
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          distribution: 'temurin'
+          java-version: '17'
       #Login to Docker
       - name: Login to Docker
         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
@@ -126,12 +132,12 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: artifact
-          path: target/laboratorio2-0.0.1-SNAPSHOT.jar
+          path: target/lab2arquisoft.jar
       #Build and push Docker image
       - name: Build and push Docker image
         run: |
-          docker build -f Dockerfile . -t rodas011/lab2arquisoft:${{github.sha}}
-          docker push rodas011/lab2arquisoft:${{github.sha}}
+          docker build -f Dockerfile . -t rodas011/lab2arquisoft
+          docker push rodas011/lab2arquisoft:latest
 
   #Deploy to AWS EC2
   deploy:
@@ -139,9 +145,9 @@ jobs:
     name: Deploy
     runs-on: aws-ec2
     steps:
-      - name: pull image from dockerhub
-        run: docker pull rodas011/lab2arquisoft:${{github.sha}}
-      - name: delete old container
+      - name: Pull image from dockerhub
+        run: docker pull rodas011/lab2arquisoft:latest
+      - name: Delete old container
         run: docker rm -f lab2arquisoft-container
-      - name: run container
-        run: docker run -d -p 8080:8080 --name lab2arquisoft-container rodas011/lab2arquisoft:${{github.sha}}
+      - name: Run container
+        run: docker run -d -p 8080:8080 --name lab2arquisoft-container rodas011/lab2arquisoft
