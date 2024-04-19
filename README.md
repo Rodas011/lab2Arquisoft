@@ -6,6 +6,16 @@
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=Rodas011_lab2Arquisoft&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=Rodas011_lab2Arquisoft)
 
 # lab2Arquisoft
+# En el siguiente link se encuentra el informe del laboratorio 
+[https://docs.google.com/document/d/1_Z4Ir99IE297RFhBlmom_rq2z8iOT-wICpFxkrnkqUU](https://docs.google.com/document/d/1l9lrxTzJTCO0oyXF8XjSxSXbkxAsfe3GlhF88PIaByI/edit)
+
+# Integrantes
+Lopez Higuita Emanuel <br>
+Losada Muñoz Santiago Alexander <br>
+Muñoz Aranda Juan Sebastian <br>
+Osorio Usuga Wilmar Andres <br>
+Rivera Montoya Santiago <br>
+Rodas Álvarez Maira Daniela <br>
 Implementation of a Simple App with the next operations:
 
 * Get random nations
